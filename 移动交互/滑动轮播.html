@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul,
+        ol {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        :root{
+            --width:100vw;
+        }
+        /* 轮播图的大盒子div样式 */
+        .ul{
+            width: var(--width);
+            overflow: hidden;
+        }
+        /* 轮播图的小盒子ul样式 */
+        .img{
+            display: flex;
+            width: calc(var(--width)*3);
+            animation: slide 10s infinite;
+        }
+       .img li{
+            width: var(--width);
+       }
+       .img li img{
+            width: 100%;
+            height: auto;
+       }
+
+       @keyframes slide{
+           0%{
+               transform: translateX(0);
+           }
+           33.33%{
+               transform: translateX(-100vw);
+           }
+           66.66%{
+               transform: translateX(-200vw);
+           }
+           100%{
+               transform: translateX(0);
+           }
+       }
+    </style>
+</head>
+<body>
+    <div class="ul">
+        <ul class="img">
+            <li><img src="./作业1素材/img1.jpg"></li>
+            <li><img src="./作业1素材/img2.jpg"></li>
+            <li><img src="./作业1素材/img3.jpg"></li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+<!-- 鼠标右键有格式化文档可以对齐代码，空格等 -->
+<body>
+    <div id="app">
+        <!-- 根组件模板的写法1 -->
+        <div>
+            <h1>{{title}}</h1>
+            <p>{{message}}</p>
+        </div>
+    </div>
+
+    <!--Vue3.0模板-->
+    <div id="app"></div>
+    <!--Vue.js的根组件的模板(写法2)-->
+    <template id="root">
+        <p>{{message}}</p>
+        <p>{{message2}}</p>
+        <!-- 三元表达式 -->
+        <h2>{{age>18?'成年':'未成年'}}</h2>
+        <h2>{{age>18}}</h2>
+        <h2>{{formatDate('2025-02-17')}}</h2>
+        <button @click="changeMessage">修改message</button>
+    </template>
+    
+    <script>
+        //app就是应用实例（创建应用实例）
+        const app=Vue.createApp({
+            template:"#root",//写法2需要写上template的名称
+            //根组件的数据（函数）
+            data(){
+                //返回根组件的数据
+                return{
+                    message:'<div>helloVue3</div>',
+                    message2:'Hello Vue.js',
+                    message3:'Hello China',
+                    title:'vue标题',
+                    age:10,
+                }
+            },
+
+            //根组件的方法
+            methods:{
+                //定义的是组件的方法 2025-2-17
+                formatDate(ds){
+                    //split()方法用于把一个字符串分割成字符串数组，即['2025','2','17']
+                    //join()方法用于把数组中的所有元素放入一个字符串，即'2025#2#17'
+                    //返回的是一个字符串
+                    return ds.split('-').join('#')
+                },
+                changeMessage(){
+                    //修改根组件的数据
+                    //this指向的是根组件(指向当前组件实例)
+                    //this.$data.message='Hello Chongqing'
+                    console.log(this.formatDate('2025-2-17'))
+                    this.message='Hello Chongqing'
+                }
+            }
+
+        })
+        //root是根组件（挂载根组件）
+        const root = app.mount('#app')//mount挂载
+    </script>
+</body>
+</html>

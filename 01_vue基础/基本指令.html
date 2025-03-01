@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- Vue.js的生命周期，接受数据一般在created或mounted，组合式的情况下相较于选项式的生命周期每个都要加个on -->
+    <div id="app"></div>
+    <template id="root">
+        <div v-html="text"></div>
+        <div v-text="text"></div>
+        <!-- v-bind可以动态绑定属性（单向绑定） -->
+        <a v-bind:href="url">百度</a>
+        <!-- v-bind的缩写 -->
+        <a :href="url">百度</a>
+        <!-- v-model也可以动态绑定（双向绑定） -->
+        <input type="text" v-model="content">
+        <div>{{content}}</div>
+        <input type="text" v-model="score">
+        <!-- v-if是直接把节点通过删除进行是否显示，而v-show是通过display:none来显示和隐藏节点的 --> 
+        <div v-if="score>90">
+            优秀
+        </div>
+        <div v-else-if="score>80">
+            良好
+        </div>
+        <div v-else-if="score>60">
+            及格
+        </div>
+        <div v-else>
+            不及格
+        </div>
+        <div v-show="isShow">
+            {{content}}
+        </div>
+
+        <!-- v-for遍历数组 -->
+        <ul>
+            <!-- key用来表示唯一性,必须加上 -->
+            <!-- index代表索引，value代表值 -->
+            <li v-for="(item,index) in students" :key="item.id">
+                <p>{{index+1}}--{{item.id}}--{{item.name}}--{{item.age}}</p>
+            </li>
+        </ul>
+        <div v-for="(value,key,index) in teachers">
+            <p>{{key}}--{{value}}--{{index}}</p>
+        </div>
+        <div v-for="item in 10">
+            {{item}}
+        </div>
+    </template>
+    <script>
+        const app=Vue.createApp({
+            template:'#root',
+            data(){
+                return{
+                    text:"<p>helloVue &copy;</p>",
+                    url:"https://www.baidu.com",
+                    content:'helloVue3',
+                    score:80,
+                    isShow:true,
+                    students:[
+                        {id:1,name:'张三',age:18},
+                        {id:2,name:'李四',age:19},
+                        {id:3,name:'王五',age:20},
+                    ],
+                    teachers:{
+                        name:'张三',
+                        age:18,
+                    }
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root{
+            /* 全局变量 */
+            --color:rgb(0,255,0);
+        }
+        .box{
+            /* 局部变量会把全局变量覆盖掉 */
+            --color:rgb(0,0,255);
+            /* 先找当前选择器，再依次往上找父选择器，最后再找伪选择器(:root) */
+            color: var(--color,red);
+        }
+        span{
+            color: var(--color);
+        }
+
+        .main{
+            --gap:20;
+            --color:rgb(255,0,0);
+            /* 计算属性 */
+            /* calc用于 */
+            margin: calc(var(--gap)*1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="box">hello<span>在div内</span></div>
+    <span>在div外</span>
+</body>
+</html>
