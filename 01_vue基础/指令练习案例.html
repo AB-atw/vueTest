@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <!-- <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style> -->
+</head>
+
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <ul>
+            <li v-for="item in news">
+                <p>{{item.type}}</p>
+                <ul>
+                    <li v-for="value in item.include">
+                        <p>{{value.title}}---{{value.date}}</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        
+        <!-- //表格 -->
+        <!-- border="1" 是 HTML 中一种比较旧的设置表格边框的方式，它属于 HTML 标签的属性，一般用在 <table> 标签里。
+            在 <table> 标签里添加 border="1" 属性时，就相当于给表格整体设置了宽度为 1 像素的边框。
+            这里的 “1” 代表边框的宽度，单位是像素，可以根据需求修改这个数值来改变边框宽度。 -->
+        <table border="1">
+            <!-- //表头，语义化标签，用来描述表格的表头，可有可无 -->
+            <thead>
+                <!-- //行 -->
+                <tr>
+                    <!-- //列 -->
+                    <th>序号</th>
+                    <th>名字</th>
+                    <th>数学</th>
+                    <th>语文</th>
+                    <th>英语</th>
+                    <th>总分数</th>
+                </tr>
+                <!-- //遍历数组，item是数组中的每一个元素，index是索引 -->
+                <tr v-for="(item,index) in students">
+                    <td>{{index+1}}</td>
+                    <td>{{item.name}}</td>
+                    <!-- <td>{{item.math}}</td> -->
+                    <td>
+                        <span v-if="item.math<60" style="color: red;">{{item.math}}</span>
+                        <span v-else style="color: green;">{{item.math}}</span>
+                    </td>
+                    <td>{{item.chinese}}</td>
+                    <td>{{item.english}}</td>
+                    <td>{{item.math+item.chinese+item.english}}</td>
+                </tr>
+
+                <!-- <tr v-for="(item,index) in students">
+                    <td>{{index+1}}</td>
+                    <td v-for="(value,key) in item">
+                        <span v-if="key=='math'|key=='chinese'|key=='english'">
+                            <span v-if="value<60" style="color: red;">{{value}}</span>
+                            <span v-else style="color: green;">{{value}}</span>
+                        </span>
+                        <span v-else>{{value}}</span>
+                    </td>
+                </tr> -->
+            </thead>
+        </table>
+
+        <ul>
+            <!-- <li v-for="item in list">
+                <input type="checkbox" v-model="item.checked">
+                <span v-if="item.checked">{{item.name}}</span>
+            </li> -->
+            <li v-for="item in list">
+                <input type="checkbox" v-select="item.checked">{{item.name}}
+            </li>
+            <button @click="checkAll">全选</button>
+            <button @click="checknotAll">反选</button>
+        </ul>
+
+        <div>
+
+        </div>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root",
+            data() {
+                return {
+                    news: [
+                        {
+                            type: '国内',
+                            include: [
+                                { title: "强信心 开新局（两会今日谈）", date: "2023-1-1" },
+                                { title: "把中国的发展成就介绍给世界", date: "2023-1-1" },
+                                { title: "大熊猫被泼水，吓得哀鸣？回应来了", date: "2023-1-1" },
+                            ]
+                        },
+                        {
+                            type: '军事',
+                            include: [
+                                { title: "印陆军订购喷气背包，打造边境作战“钢铁侠”？", date: "2023-1-1" },
+                                { title: "朝鲜试射4枚箭矢2战略巡航导弹", date: "2023-1-1" },
+                                { title: "和平23海军联演落幕", date: "2023-1-1" },
+                            ]
+                        },
+                        {
+                            type: '国际',
+                            include: [
+                                { title: "外媒：印俄石油交易削弱美元主导地位", date: "2023-1-1" },
+                                { title: "美国6岁男孩故意掏枪打伤老师 检察官：不予起诉", date: "2023-1-1" },
+                                { title: "印度70岁老妇家中被20多只猴子围攻 身受重伤去世", date: "2023-1-1" },
+                            ]
+                        },
+                    ],
+                    students: [
+                        { name: 'Bob', math: 97, chinese: 89, english: 67 },
+                        { name: 'Tom', math: 67, chinese: 52, english: 98 },
+                        { name: 'Jerry', math: 72, chinese: 87, english: 89 },
+                        { name: 'Ben', math: 92, chinese: 87, english: 59 },
+                        { name: 'Chan', math: 47, chinese: 85, english: 92 },
+                    ],
+                    list: [
+                        { name: "足球", checked: false },
+                        { name: "篮球", checked: false },
+                        { name: "乒乓球", checked: true },
+                    ]
+
+                }
+            },
+            created(){
+                this.students.foreach(item=>{
+                    item.total=item.math+item.chinese+item.english
+                })
+            },
+
+
+            methods:{
+                checkAll(){
+                    this.list.forEach(item=>{
+                        item.checked=true
+                    })
+                },
+                checknotAll(){
+                    this.list.forEach(item=>{
+                        item.checked=!item.checked
+                    })
+                }
+            }
+        })
+        app.directive('select', {
+            mounted(el, binding) {
+                el.checked = binding.value
+            },
+            updated(el, binding) {
+                console.log('binding')
+                el.checked = binding.value
+            }
+        })
+
+        const root = app.mount("#app")
+    </script>
+</body>
+
+</html>

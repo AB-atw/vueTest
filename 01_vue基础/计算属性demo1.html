@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <div>
+            <p>{{firstName+''+lastName}}</p>
+            <p>{{fullName()}}</p>
+            <p>{{fullName2}}</p>
+            <p>{{score>60?"合格":'不合格'}}</p>
+            <p>{{scoreMethod()}}</p>
+            <p>{{score2}}</p>
+            <p>{{message.split('').reverse().join('')}}</p>
+            <p>{{messageMethod()}}</p>
+            <p>{{message2}}</p>
+            <input type="text" v-model="fullName3">
+            <input type="number" v-model="weight">
+            <input type="number" v-model="height">
+            <p>{{bmi}}</p>
+        </div>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: '#root', 
+            data() {
+                return {
+                    firstName:'zs',
+                    lastName:'ls',
+                    score:80,
+                    message:"hello world",
+                    weight:70,
+                    height:1.8,
+                } 
+            },
+            
+            //方法
+            methods:{
+                fullName(){
+                    console.log('函数')
+                    return this.firstName+''+this.lastName
+                },
+                scoreMethod(){
+                    return this.score>60?"合格":'不合格'
+                },
+                messageMethod(){
+                    return this.message.split('').reverse().join('') 
+                }
+            },
+            //计算属性
+            computed:{
+                fullName2(){
+                    console.log('属性')
+                    return this.firstName+''+this.lastName
+                },
+                score2(){
+                    return this.score>60?"合格":'不合格'
+                },
+                message2(){
+                    return this.message.split('').reverse().join('')
+                },
+                fullName3:{
+                    set(value){
+                        this.firstName=value.split('')[0]
+                        this.lastName=value.split('')[1]
+                    },
+                    get(){
+                        return this.firstName+''+this.lastName
+                    }
+                },
+                bmi(){
+                    
+                        return this.weight/(this.height*this.height)
+                    
+                }
+            }
+            
+        })
+        app.mount("#app")
+    </script>
+</body>
+</html>

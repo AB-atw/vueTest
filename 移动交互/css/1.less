@@ -1,0 +1,14 @@
+//定义变量（全局变量）
+@color:red;
+@bgcolor:lightblue;
+
+// 调用变量
+.cla11{
+    /*使用默认颜色*/
+    color: @color;
+    background-color: @bgcolor;
+}
+@bgcolor:lightgreen;//重新定义全局变量
+.cls12{
+   background-color: @bgcolor; 
+}

@@ -5,21 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <title>Document</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <!-- Vue.js的生命周期，接受数据一般在created或mounted，组合式的情况下相较于选项式的生命周期每个都要加个on -->
     <div id="app"></div>
+
     <template id="root">
+        <!-- v-html可以渲染html标签 -->
         <div v-html="text"></div>
+        <!-- v-text可以渲染文本 -->
         <div v-text="text"></div>
-        <!-- v-bind可以动态绑定属性（单向绑定） -->
+        <!-- v-bind可以动态绑定属性，不会随着视图的改变而改变模型（单向绑定） -->
         <a v-bind:href="url">百度</a>
         <!-- v-bind的缩写 -->
         <a :href="url">百度</a>
-        <!-- v-model也可以动态绑定（双向绑定） -->
+        <!-- v-model也可以动态绑定属性，模型与视图相互改变（双向绑定） -->
         <input type="text" v-model="content">
         <div>{{content}}</div>
+        <!-- v-model是一个语法糖，可以直接用简化代码，简化了用v-on加上v-bind一起使用能有相同作用的代码 -->
         <input type="text" v-model="score">
+        {{score}}
+        <!-- v-on:input监听input事件，$event.target.value获取输入框的值，再赋值给score -->
+        <input type="text" v-bind:value="score" v-on:input="score=$event.target.value">
+        {{score}}
         <!-- v-if是直接把节点通过删除进行是否显示，而v-show是通过display:none来显示和隐藏节点的 --> 
         <div v-if="score>90">
             优秀
@@ -33,6 +46,9 @@
         <div v-else>
             不及格
         </div>
+        <div v-if="isShow">
+            {{content}}
+        </div>
         <div v-show="isShow">
             {{content}}
         </div>
@@ -40,18 +56,42 @@
         <!-- v-for遍历数组 -->
         <ul>
             <!-- key用来表示唯一性,必须加上 -->
-            <!-- index代表索引，value代表值 -->
+            <!-- item是数组中的每一个元素，key是唯一标识，index代表索引 -->
             <li v-for="(item,index) in students" :key="item.id">
                 <p>{{index+1}}--{{item.id}}--{{item.name}}--{{item.age}}</p>
             </li>
         </ul>
+
+        <!-- v-for遍历对象 -->
+        <!-- value是对象中的每一个值，key是对象中的每一个键，index是索引 -->
         <div v-for="(value,key,index) in teachers">
             <p>{{key}}--{{value}}--{{index}}</p>
         </div>
         <div v-for="item in 10">
             {{item}}
         </div>
+
+        <!-- 以下三个指令用到的概率很小 -->
+        <!-- v-cloak用于解决闪屏问题 -->
+        <div v-cloak>
+            {{content}}
+        </div>
+        <!-- v-pre可以防止解析模板，直接显示模板的内容 -->
+        <div v-pre>
+            {{content}}
+        </div>
+        <!-- v-once可以防止数据的重新渲染，只渲染一次 -->
+        <div v-once>
+            {{content}} 
+        </div>
+
+        <!-- v-focus是自定义指令，mounted是钩子函数,abc是指令的参数，test是指令的修饰符，content是指令的值 -->
+        <input type="text" v-focus:abc.test="content">
+        <div v-highlight="'red'">
+            {{content}}
+        </div>
     </template>
+
     <script>
         const app=Vue.createApp({
             template:'#root',
@@ -72,6 +112,31 @@
                         age:18,
                     }
                 }
+            },
+            methods:{
+                addStudent(){
+                    this.students.push({id:4,name:'赵六',age:21})//从数组的末尾添加一个元素，会改变原数组
+                    this.students.unshift({id:4,name:'赵六',age:21})//从数组的开头添加一个元素，会改变原数组
+                    this.students.concat({id:4,name:'赵六',age:21})//拼接数组，返回新数组，不会改变原数组
+                    this.students = this.students.concat({id:4,name:'赵六',age:21})//重新赋值，会改变原数组
+                }
+            },
+            //自定义指令，局部注册(注：局部注册的指令只能在当前组件中使用，全局注册的指令可以在所有组件中使用)
+            directives:{
+                highlight:{
+                    mounted(el,binding,vnode){
+                        el.style.backgroundColor=binding.value
+                    }
+                }
+            }
+        })
+        //全局自定义指令（全局注册），focus是指令的名称，后面的对象是指令的选项，mounted是钩子函数
+        app.directive('focus',{
+            mounted(el,binding,vnode){//el是当前元素（指的是挂载当前指令的标签元素），binding是指令的值，vnode是虚拟节点
+                console.log(el),
+                console.log(binding),
+                console.log(vnode)
+                el.focus()//获取焦点
             }
         })
         app.mount('#app')

@@ -1,0 +1,224 @@
+<!-- 229990513赖国彬 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <style>
+        *{
+            margin: auto;
+            padding: auto;
+            border: 0;
+            font: normal 12px "Microsoft YaHei", "宋体";            
+        }
+        ul,
+        ol {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        a{
+            text-decoration: none;
+            color: inherit; /*继承上一级的默认颜色*/
+        }
+
+        .nav{
+            border-bottom: 8px solid #ed1d24;
+            height: 100px;
+            background: url(https://www.hongyanmuseum.cn/static/images/nav-bg.png) repeat-x left top;
+        }
+        .nav>ul{
+            width: 1024px;
+            margin: 0 auto;
+        }
+        .nav>ul>li{
+            float: left;
+            position: relative;
+        }
+        .nav>ul>li>a{
+            background: url(https://www.hongyanmuseum.cn/static/images/nav-line.png) no-repeat right top;
+            float: left;
+            height: 70px;
+            text-align: center;
+            width: 113px;
+            display: block;
+            color: #fff;
+            font-size: 20px;
+            padding: 30px 0 0 0;
+            font-weight: bold;
+        }
+        .nav ul li a span{
+            color: #fff;
+            display: block;
+            line-height: 16px;
+        }
+        .nav ul li a.active{
+            color: #FFF;
+            height: 70px;
+            background: url(https://www.hongyanmuseum.cn/static/images/nav.png) no-repeat left top;
+        }
+
+        .subNav{
+            width: 113px;
+            background: #ed1d24;
+            margin-left: 0;
+            margin-top: 88px;
+            position: absolute;
+            z-index: 1000;
+            padding: 10px 0;
+            display: none; 
+        }
+        .nav>ul>li:hover .subNav{
+            display: block;
+       }
+       
+        .subNav li{
+            float: none;   
+        }
+       .subNav li a{
+            font-size: 14px;
+            font-weight: normal;
+            color: #FFF;
+            width: auto;
+            height: auto;
+            display: block;
+            padding: 0;
+            float: none;
+            line-height: 32px;
+            text-align: center;
+       }
+       .subNav li a:hover{
+            background: #d90616;
+            height: auto;   
+       }
+       
+       [v-cloak]{
+           display: none;
+       }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <div class="nav">
+            <ul>
+                <!-- @click绑定点击事件，调用 toggleActive 方法并传入当前索引 -->
+                <!-- @mouseover 绑定鼠标悬停事件，将当前索引赋值给 hoverIndex -->
+                <!-- @mouseout 绑定鼠标移出事件，将 hoverIndex 重置为 -1 -->
+                <li v-for="(item,index) in nav" :key="index" 
+                v-on:click="toggleActive(index)"
+                v-on:mouseover="hoverIndex = index"
+                v-on:mouseout="hoverIndex = -1">
+                    <!-- 使用 v-bind:class 动态绑定类名，根据当前索引是否等于 activeIndex 或 hoverIndex 来添加 active 类 -->
+                    <a :href="item.url" v-bind:class="{ active: index === activeIndex || index === hoverIndex }">
+                        {{item.title}}
+                        <span>
+                            {{item.span}}
+                        </span>
+                    </a>
+                    <ul class="subNav">
+                        <li v-for="(subItem,index) in item.subNav" :key="index">
+                            <a :href="subItem.url">
+                                {{subItem.title}}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root", 
+            data() {
+                return {
+                    nav: [
+                        // show:false用于控制二级导航是否显示的标志
+                        {
+                            title:"首页",span:"Home",url:'#',show:false,
+                        },
+                        {
+                            title:"关于红岩",span:"HongYan",url:'#',show:false,
+                            subNav:[
+                                {title:"红岩文化",url:"#"},
+                                {title:"博物馆机构",url:"#"},
+                                {title:"历史沿革",url:"#"},
+                            ]
+                        },
+                        {
+                            title:"公告动态",span:"Dynamics",url:'#',show:false,
+                            subNav:[
+                                {title:"文博信息",url:"#"},
+                                {title:"政务平台",url:"#"},
+                                {title:"公告",url:"#"},
+                                {title:"专题报道",url:"#"},
+                            ] 
+                        },
+                        {
+                            title:"馆藏精品",span:"Collections",url:'#',show:false,
+                            subNav:[
+                                {title:"一级文物",url:"#"},
+                                {title:"二级文物",url:"#"},
+                                {title:"三级文物",url:"#"},
+                            ] 
+                        },
+                        {
+                            title:"陈列展览",span:"Exhibition",url:'#',show:false,
+                            subNav:[
+                                {title:"虚拟展览",url:"#"},
+                                {title:"基本陈列",url:"#"},
+                                {title:"复原陈列",url:"#"},
+                                {title:"临时展览",url:"#"},
+                                {title:"展览交流",url:"#"},
+                            ] 
+                        },
+                        {
+                            title:"研究开发",span:"Research",url:'#',show:false,
+                            subNav:[
+                                {title:"历史研究",url:"#"},
+                                {title:"艺术创作",url:"#"},
+                                {title:"影音在线",url:"#"},
+                                {title:"文创产品",url:"#"},
+                            ] 
+                        },
+                        {
+                            title:"公共教育",span:"Education",url:'#',show:false,
+                            subNav:[
+                                {title:"党性教育",url:"#"},
+                                {title:"爱国主义教育",url:"#"},
+                                {title:"研学实践教育",url:"#"},
+                                {title:"科普教育",url:"#"},
+                            ] 
+                        },
+                        {
+                            title:"参观服务",span:"Service",url:'#',show:false,
+                            subNav:[
+                                {title:"景点介绍",url:"#"},
+                                {title:"景区登记",url:"#"},
+                                {title:"志愿服务",url:"#"},
+                                {title:"服务内容",url:"#"},
+                            ] 
+                        },
+                        {
+                            title:"景区登记",span:"Reservation",url:'#',show:false,
+                        }
+                    ],
+                    activeIndex: -1, // 记录当前激活的导航索引，初始值为 -1 表示没有激活的导航
+                    hoverIndex: -1 // 记录当前悬停的导航索引，初始值为 -1 表示没有悬停的导航
+                }
+                
+            },
+            // 切换激活状态的方法
+            methods: {
+                toggleActive(index) {
+                    this.activeIndex = index;// 将当前点击的导航项的索引赋值给 activeIndex
+                }
+            }
+        })
+        const root = app.mount("#app")
+    </script>
+</body>
+</html>

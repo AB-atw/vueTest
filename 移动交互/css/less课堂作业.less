@@ -1,0 +1,10 @@
+.greatfont(@i:1,@n:5) when(@i<@n){
+    .font-@{i}{
+       font-size: @i*10px;
+       color: @i*30+red;
+       background-color: (90/@i+green);
+       border: @i+1px solid @i*30+blue;
+    }
+    .greatfont(@i+1);//递归调用
+}
+.greatfont(1,5);

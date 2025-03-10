@@ -1,0 +1,7 @@
+.greatfont(@i:1,@n:5) when(@i<@n){
+    .font-@{i}{
+       font-size: @i*10px;
+    }
+    .greatfont(@i+1);//递归调用
+}
+.greatfont(1,5);

@@ -1,0 +1,22 @@
+// 定义混入
+.cicle(@r:100px,@bgcolor:lightblue){
+    width:@r*2;
+    height:@r*2;
+    border-radius: @r;
+    background-color: @bgcolor;
+}
+.boxshaw(@x:0px,@y:0px,@blur:1px,@color:#eee){
+    box-shadow: @arguments;
+}
+
+.cls21{
+    .cicle(50px,pink);
+}
+.cls22{
+    .cicle();
+    .boxshaw();
+}
+.cls23{
+   .cicle(200px);
+  .boxshaw(1px,2px,3px,#ddd);
+}

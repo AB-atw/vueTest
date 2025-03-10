@@ -1,0 +1,13 @@
+// less运算
+@color:#1111;
+@width:400px;
+.cls41{
+    color:@color*2;
+    // less语法升级，除法建议加上括号，防止计算错误
+    width:(@width/2);
+    background-color: @color+111;
+}
+.cls42{
+    color: lighten(@color, 5%);//lighten()函数，颜色变亮
+    color: darken(@color, 5%);//darken()函数，颜色变暗
+}

@@ -1,3 +1,4 @@
+<!-- 229990513赖国彬 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        *{
+            margin: auto;
+            padding: auto;
+        }
         ul,
         ol {
             list-style: none;
@@ -16,13 +21,16 @@
         }
         /* 轮播图的大盒子div样式 */
         .ul{
+            /* //var()函数用于插入css变量的值（调用） */
             width: var(--width);
             overflow: hidden;
         }
         /* 轮播图的小盒子ul样式 */
         .img{
             display: flex;
+            /* calc函数作用是在声明css属性值时进行数学计算（数值计算） */
             width: calc(var(--width)*3);
+            /* slide是动画的名称，10s是动画的时间，infinte表示无限循环 */
             animation: slide 10s infinite;
         }
        .img li{
@@ -33,6 +41,11 @@
             height: auto;
        }
 
+        /* @keyframes 规则中的百分比参数用来界定动画在不同时间点的状态。
+        这些百分比代表了动画的完成进度，范围从 0%（动画开始）到 100%（动画结束）。
+        可以按需添加更多的百分比关键帧，进而更精细地控制动画的变化过程。
+        百分比关键帧不一定非要均匀分布，可以根据实际需求自由设定不同的时间点。 */
+        /* keyframes(关键帧) */
        @keyframes slide{
            0%{
                transform: translateX(0);
