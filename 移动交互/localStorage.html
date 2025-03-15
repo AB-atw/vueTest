@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>localStorage</title>
+</head>
+<body>
+    <from action="">
+        <!-- <br> 标签是一个换行标签，用于在文本中强制换行 -->
+        姓名：<input type="text" id="username"><br>
+        年龄：<input type="number" id="age"><br>
+        学号：<input type="number" id="no"><br>
+        <input type="button" value="存数据" onclick="localSave()">
+        <input type="button" value="获取数据" onclick="localLoad()">
+        <input type="button" value="清除数据" onclick="localRemove()">
+        <div class="datail"></div>
+        
+    </from>
+</body>
+<script>
+    function localSave(){
+        //获取数据
+        let username=document.querySelector("#username");
+        let age=document.querySelector("#age");
+        let no=document.querySelector("#no");
+        //判断浏览器是否支持localstorage
+        if(window.localStorage){
+            localStorage.setItem("username",username.value);
+            localStorage["age"]=age.value;
+            localStorage.no=no.value;
+        }
+        else{
+            alert("浏览器不支持localstorage");
+        } 
+    }
+
+    function localLoad(){
+       let datail=document.querySelector(".datail"); 
+       if(window.localStorage){
+        // datail.innerHTML="姓名："+localStorage.getItem("username")+
+        // "年龄："+localStorage["age"]+
+        // "学号："+localStorage.no;
+        //通过长度、key值获取数据
+            detail.innerHTML="";
+            for(let i=0;i<localStorage.length;i++){
+                datail.innerHTML+=localStorage.key(i)+":"+localStorage.getItem(localStorage.key(i));
+            }
+       }
+       else{
+        alert("浏览器不支持localstorage");
+       }
+    }
+
+    function localRemove(){
+        if(window.localStorage){
+            // localStorage.removeItem("no");//删除单条 
+            localStorage.clear();//清空所有
+        }
+        else{
+            alert("浏览器不支持localstorage"); 
+        }
+    }
+</script>
+</html>

@@ -1,8 +1,20 @@
-.cla11 {
-  /*使用默认颜色*/
-  color: red;
-  background-color: lightgreen;
+.cls11 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  background-color: lightblue;
 }
+
 .cls12 {
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+  background-color: lightblue;
+}
+
+.cls13 {
+  width: 300px;
+  height: 300px;
+  border-radius: 150px;
   background-color: lightgreen;
 }

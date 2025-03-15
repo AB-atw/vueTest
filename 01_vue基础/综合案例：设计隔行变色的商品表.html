@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <table>
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>名称</th>
+                    <th>库存</th>
+                    <th>价格</th>
+                    <th>产地</th>
+                </tr>
+                <tr v-for="(item, index) in shangpin" :key="index">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.place }}</td>
+                    <td :style="{ color: item.score < 60 ? 'red' : 'inherit' }">{{ item.score }}</td>
+                </tr>
+        </table>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root", 
+            data() {
+                return{
+                    shangpin:[
+                        {id:1,name:'洗衣机',num:'2800台',price:188,place:'北京'},
+                        {id:2,name:'电视机',num:'2600台',price:188,place:'广州'},
+                        {id:3,name:'冰箱',num:'5400台',price:188,place:'上海'},
+                        {id:4,name:'空调',num:'1800台',price:188,place:'北京'},
+                    ]
+                }
+            },
+            
+        })
+        app.mount("#app")
+    </script>
+</body>
+</html>

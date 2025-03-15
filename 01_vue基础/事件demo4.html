@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <!-- 方法实例--与事件绑定 -->
+    <div id="app"></div>
+    <template id="root">
+        <div>
+            <div style="width: 200px; height: 200px; background-color: pink;" @click="acceptClick1" >
+                <div style="width: 100px; height: 100px; background-color: blue;" @click="acceptClick2"></div>
+            </div> 
+        </div>
+        <a href="baidu.com" @click="jump($event)">百度</a>
+        <a href="baidu.com" @click.prevent="jump2">百度2</a>
+        <button @keydown.enter=""></button>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root", 
+            data() {
+                return{
+                    
+                }
+            },
+            methods:{
+                acceptClick1(){
+                    console.log("外部点击");
+                },
+                acceptClick2(){
+                    console.log("内部点击");
+                    e.stopPropagation()//原生阻止冒泡
+                    window.event.stopPropagation()//阻止冒泡
+                },
+                jump(e){
+                    e.preventDefault()//原生阻止默认行为
+                },
+                jump2(e){
+                    console.log('jump');
+                }
+            }
+        })
+        app.mount("#app")
+    </script>
+</body>
+</html>

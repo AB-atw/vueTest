@@ -1,0 +1,215 @@
+<!-- 229990513赖国彬 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <style>
+        * {
+            margin: auto;
+            padding: auto;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            font: 14px / 1.5 Helvetica Neue, Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, sans-serif;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .main {
+            width: 1240px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .top {
+            min-height: 1px;
+            position: relative;
+            z-index: 1;
+            float: left;
+            width: 234px;
+            margin-left: 14px;
+            margin-bottom: 14px;
+            background: #fff;
+            transition: all .2s linear;
+        }
+
+        .top:hover {
+            z-index: 2;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+            transform: translate3d(0, -2px, 0);
+        }
+
+        .top a img {
+            height: 609px;
+            width: 234px;
+        }
+
+        .list {
+            width: 992px;
+            float: left;
+        }
+
+        .list li:hover {
+            z-index: 2;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+            transform: translate3d(0, -2px, 0);
+        }
+
+        .list li {
+            height: 300px;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+            float: left;
+            width: 234px;
+            margin-left: 14px;
+            margin-bottom: 14px;
+            background: #fff;
+            transition: all .2s linear;
+        }
+
+        .img {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 18px;
+        }
+
+        .list li a img {
+            width: 160px;
+            height: 160px;
+        }
+
+        .list li a h3 {
+            margin: 0 10px 2px;
+            text-align: center;
+            /* 超出部分用省略号代替 */
+            text-overflow: ellipsis;
+            /* 文本不换行 */
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 14px;
+            font-weight: 400;
+            color: #333;
+
+        }
+
+        .type {
+            margin: 0 10px 10px;
+            height: 18px;
+            font-size: 12px;
+            color: #b0b0b0;
+            text-align: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .price {
+            margin: 0 10px 14px;
+            text-align: center;
+            color: #ff6700;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <div class="main">
+            <div class="top">
+                <a href="#"><img src="./img/小米.webp"></a>
+            </div>
+            <ul class="list">
+                <li v-for="item in phoneList">
+                    <a href="#">
+                        <div class="img"><img :src="item.imgUrl" alt=""></div>
+                        <h3>{{item.title}}</h3>
+                        <p class="type">{{item.type}}</p>
+                        <p class="price">{{item.price}}</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root",
+            data() {
+                return {
+                    phoneList: [
+                        {
+                            imgUrl: "./img/小米01.webp",
+                            // img:"https://cdn.cnbj1.fds.api.mi-img.com/nr-pub/202502251811_93715df0882e43e252843e3c7b775570.png?thumb=1&w=250&h=250&f=webp&q=90",
+                            title: "Xiaomi 15 Ultra",
+                            type: " 徕卡1英寸主摄 | 徕卡2亿超级长焦 | 徕卡超纯光学系统 | 骁龙8至尊版移动平台 | 6000mAh 小米金沙江电池 | 小米澎湃OS 2",
+                            price: "6499元起",
+                        },
+                        {
+                            imgUrl: "./img/小米02.webp",
+                            title: "REDMI Turbo 4",
+                            type: "REDMI Turbo 4 好看又能打",
+                            price: "1999元起",
+                        },
+                        {
+                            imgUrl: "./img/小米03.webp",
+                            title: "Redmi 14C",
+                            type: "【持久续航】5160mAh 大电池",
+                            price: "499元起",
+                        },
+                        {
+                            imgUrl: "./img/小米04.webp",
+                            title: "REDMI K80 Pro",
+                            type: "骁龙8至尊版|2K新国屏|全焦段影像",
+                            price: "3699元起",
+                        },
+                        {
+                            imgUrl: "./img/小米05.webp",
+                            title: "REDMI K80",
+                            type: "第三代骁龙8|2K新国屏|6550mAh 超长续航",
+                            price: "2499元起",
+                        },
+                        {
+                            imgUrl: "./img/小米06.webp",
+                            title: "Xiaomi 15",
+                            type: " 徕卡光学 Summilux 高速镜头｜骁龙®8至尊版移动平台｜5400mAh 小米金沙江电池 小米澎湃OS 2",
+                            price: "4499元起",
+                        },
+                        {
+                            imgUrl: "./img/小米07.webp",
+                            title: "Xiaomi 15 Pro",
+                            type: "徕卡光学 Summilux 高速镜头｜ 骁龙®8至尊版移动平台｜6100mAh 小米金沙江电池｜小米澎湃OS 2",
+                            price: "5299元起",
+                        },
+                        {
+                            imgUrl: "./img/小米08.webp",
+                            title: "Xiaomi 15 定制版",
+                            type: "卡光学 Summilux 高速镜头｜骁龙®8至尊版移动平台｜5400mAh 小米金沙江电池 小米澎湃OS 2",
+                            price: "4999元起",
+                        }
+                    ]
+                }
+            }
+
+        })
+        const root = app.mount("#app")
+    </script>
+</body>
+
+</html>

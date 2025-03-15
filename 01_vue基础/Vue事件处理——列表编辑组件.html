@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <!-- 方法实例--与事件绑定 -->
+    <div id="app"></div>
+    <template id="root">
+        <h3>任务列表</h3>
+        <ul>
+            <li v-for="(v,i) in list">
+                <span @dblclick="change(i)" v-if="!v.edit">{{v.text}}</span>
+                <input type="text" v-model="v.text" v-if="v.edit" @blur="recovery(i)" @keydown.enter="recovery(i)">
+            </li>
+        </ul>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root", 
+            data() {
+                return{
+                    list:[
+                        {
+                            text:'学习Vue2',
+                            edit:false
+                        },
+                        {
+                            text:'学习React',
+                            edit:false
+                        },
+                        {
+                            text:'学习Angular',
+                            edit:false
+                        }
+                    ]
+                }
+            },
+            methods:{
+                change(i){
+                    this.students[i].edit=true;
+                },
+                recovery(){
+                    this.students[i].edit=false;
+                }
+            }
+        })
+        app.mount("#app")
+    </script>
+</body>
+</html>

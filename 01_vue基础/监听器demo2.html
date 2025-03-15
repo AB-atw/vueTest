@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <div>
+            <span>姓名：</span>
+            <p>{{info.name}}</p>
+            <span>年龄：</span>
+            <p>{{info.age}}</p>
+            <button @click="changeInfo">修改</button>
+            <p>{{cinfo}}</p>
+        </div>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root",
+            data() {
+                return {
+                    
+                        info: {
+                            name: "zs",
+                            age: 18
+                        }
+                    
+                }
+            },
+            computed: {
+                cinfo() {
+                    return JSON.stringify(this.info)//将对象转换为字符串，监听计算属性
+                }
+            },
+            watch: {
+                //watch结合computed解决前后值一致的问题
+                cinfo: {
+                    handler: function (newValue, oldValue) {
+                        console.log(`新值`, JSON.parse(newValue))
+                        console.log(`旧值`, JSON.parse(oldValue || "{}"))
+                    },
+                    deep: true,
+                    immediate: true
+                }
+            },
+            methods: {
+                changeInfo() {
+                    this.info.name = 'ls'
+                    this.info.age = 20
+                }
+            }
+        })
+        const root = app.mount("#app")
+    </script>
+</body>
+
+</html>

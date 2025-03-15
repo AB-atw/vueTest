@@ -65,6 +65,7 @@
                 message2(){
                     return this.message.split('').reverse().join('')
                 },
+                //计算属性的set和get方法
                 fullName3:{
                     set(value){
                         this.firstName=value.split('')[0]
@@ -80,9 +81,10 @@
                     
                 }
             }
-            
         })
         app.mount("#app")
+
+        //计算属性的原理
     </script>
 </body>
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <style>
+        table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>成绩</th>
+                </tr>
+                <tr v-for="(item, index) in students" :key="index">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.sex }}</td>
+                    <!-- 使用 :style 绑定内联样式 -->
+                    <td :style="{ color: item.score < 60 ? 'red' : 'inherit' }">{{ item.score }}</td>
+                </tr>
+        </table>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root", 
+            data() {
+                return{
+                    students:[
+                        {id:1,name:'刘备',sex:'男',score:68},
+                        {id:2,name:'关羽',sex:'男',score:89},
+                        {id:3,name:'张飞',sex:'女',score:35}, 
+                        {id:4,name:'赵云',sex:'男',score:95},
+                        {id:5,name:'曹操',sex:'男',score:55}
+                    ]
+                }
+            },
+            
+        })
+        app.mount("#app")
+    </script>
+</body>
+</html>

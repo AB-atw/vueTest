@@ -1,0 +1,17 @@
+// 声明混合宏
+@mixin circle($r:50px,$bgcolor:lightblue){
+    width:$r*2;
+    height:$r*2;
+    border-radius:$r;
+    background-color:$bgcolor;
+}
+.cls11{
+    // 调用混合宏
+    @include circle();
+}
+.cls12{
+    @include circle(100px);
+}
+.cls13{
+    @include circle(150px,lightgreen);
+}

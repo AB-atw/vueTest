@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <style>
+        .crossbtn{
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        position: absolute;
+        right: 0;
+        top: 0;
+       }
+    </style>
+</head>
+<body>
+    <!-- 方法实例--与事件绑定 -->
+    <div id="app"></div>
+    <template id="root">
+        <div>
+            <div class="crossbtn" @click="hiddenAd"></div>
+            <img src="./img/202502251811_93715df0882e43e252843e3c7b775570.webp" ref="ad" style="width: 120px;height: auto;"  class="ad">
+        </div>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root", 
+            data() {
+                return{}
+            },
+            methods:{
+                hiddenAd(){
+                    //decument.querySelector(".ad").style.display = "none"
+                    this.$refs.ad.style.display = "none"//通过ref获取元素
+                }
+            }
+        })
+        app.mount("#app")
+    </script>
+</body>
+</html>

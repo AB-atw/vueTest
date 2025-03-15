@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <div>
+            <span>小时：</span>
+            <input type="number" v-model="hour">
+            <span>分钟：</span>
+            <input type="number" v-model="minute">
+        </div>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root", 
+            data() {
+                return {
+                    hour: 0,
+                    minute: 0
+                } 
+            },
+            watch:{
+                //watch监听器的第一种写法
+                hour(newValue,oldValue){
+                    console.log(newValue,oldValue)
+                    console.log(`新值:${newValue},旧值:${oldValue}`)
+                    // 将小时转换为分钟
+                    this.minute = newValue * 60;
+                    // setTimeout(() => {
+                    //     this.minute = newValue * 60;
+                    // }, 1000);//可以执行异步操作
+                },
+                //watch监听器的第二种写法
+                minute:{
+                    handler(newValue,oldValue){
+                        console.log(newValue,oldValue)
+                        console.log(`新值:${newValue},旧值:${oldValue}`)
+                        // 将分钟转换为小时
+                        this.hour = newValue / 60;
+                    }
+                }
+            }
+        })
+        const root = app.mount("#app")
+    </script>
+</body>
+</html>
+
+<!-- <div id="app"></div>
+    <template id="root">
+        
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root", 
+            data() {
+                return {
+                } 
+            }
+        })
+        const root = app.mount("#app")
+    </script> -->

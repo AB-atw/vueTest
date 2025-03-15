@@ -1,0 +1,9 @@
+@for $i from 1 through 10{
+    .font-#{$i}{
+        font-size: 12px+$i*2;
+        color: darken(#999, $i*3);
+        @if $i%3==0{
+            text-decoration: underline;
+        }
+    }
+}

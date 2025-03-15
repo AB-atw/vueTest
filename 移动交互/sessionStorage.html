@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sessionStorage</title>
+</head>
+<body>
+    <from action="">
+        姓名：<input type="text" id="username"><br>
+        年龄：<input type="number" id="age"><br>
+        学号：<input type="number" id="no"><br>
+        <input type="button" value="存数据" onclick="sessionSave()">
+        <input type="button" value="获取数据" onclick="sessionLoad()">
+        <input type="button" value="清除数据" onclick="sessionRemove()">
+        <div class="datail"></div>
+        
+    </from>
+</body>
+<script>
+    function sessionSave(){
+        //获取数据
+        let username=document.querySelector("#username");
+        let age=document.querySelector("#age");
+        let no=document.querySelector("#no");
+        //判断浏览器是否支持sessionstorage
+        if(window.sessionStorage){
+            sessionStorage.setItem("username",username.value);
+            sessionStorage["age"]=age.value;
+            sessionStorage.no=no.value;
+        }
+        else{
+            alert("浏览器不支持sessionstorage");
+        } 
+    }
+
+    function sessionLoad(){
+       let datail=document.querySelector(".datail"); 
+       if(window.sessionStorage){
+        // datail.innerHTML="姓名："+sessionStorage.getItem("username")+
+        // "年龄："+sessionStorage["age"]+
+        // "学号："+sessionStorage.no;
+        //通过长度、key值获取数据
+            detail.innerHTML="";
+            for(let i=0;i<sessionStorage.length;i++){
+                datail.innerHTML+=sessionStorage.key(i)+":"+sessionStorage.getItem(sessionStorage.key(i));
+            }
+       }
+       else{
+        alert("浏览器不支持sessionstorage");
+       }
+    }
+
+    function sessionRemove(){
+        if(window.sessionStorage){
+            // sessionStorage.removeItem("no");//删除单条 
+            sessionStorage.clear();//清空所有
+        }
+        else{
+            alert("浏览器不支持sessionstorage"); 
+        }
+    }
+</script>
+</html>
