@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/inputnumber.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>小米购物车</title>
+</head>
+
+<body>
+    <div class="app-container" id="app">
+        <div class="breadcrumb">
+            <img class="logo" src="img/7.png" alt="">
+            <span class="span1">我的购物车</span>
+            <span class="span2">温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</span>
+            <span class="span3"> 2909696753 | 我的订单</span>
+        </div>
+        <!-- 购物车主体 -->
+        <div v-if="fruitList.length > 0" class="main">
+            <div class="table">
+                <!-- 头部 -->
+                <div class="thead">
+                    <div class="tr">
+                        <div class="th">
+                            <!-- 全选 -->
+                            <label class="check-all">
+                                <input type="checkbox" v-model="isAll" />
+                                全选
+                            </label>
+                        </div>
+                        <div class="th th-pic">商品名称</div>
+                        <div class="th">单价</div>
+                        <div class="th num-th">数量</div>
+                        <div class="th">小计</div>
+                        <div class="th">操作</div>
+                    </div>
+                </div>
+                <!-- 身体 -->
+                <div class="tbody">
+                    <div v-for="(item,index) in fruitList" :key="item.id" :class="{tr:true,active: item.isChecked}">
+                        <div class="td"><input type="checkbox" class="mycheck" v-model="item.isChecked" /></div>
+                        <div class="td goods"><img v-bind:src="item.icon" alt="" />{{item.name}}</div>
+                        <div class="td">{{item.price}}</div>
+                        <div class="td">
+                            <div class="my-input-number">
+                                <!--当num小于等于1时禁用-号-->
+                                <button :disabled="item.num <= 1" @click="sub(item)" class="decrease"> - </button>
+                                <span class="my-input__inner">{{item.num}}</span>
+                                <button @click="add(item)" class="increase"> + </button>
+                            </div>
+                        </div>
+                        <div class="td">{{ calculateTotal(item) }}</div>
+                        <div class="td"><button class="delbutton" v-on:click="del(item.id)">×</button></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 底部 -->
+            <div class="bottom">
+                <div class="leftbox">
+                    <span>继续购物 已选择<span class="textcol">{{totalCount}}</span>件</span>
+                </div>
+                <div class="right-box">
+                    <!-- 所有商品总价 -->
+                    <span class="price-box">合计&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span class="price">
+                            {{totalPrice}}</span>元</span>
+                    <!-- 结算按钮 -->
+                    <button class="pay">去结算</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // const defaultArr = [
+        //     // {
+        //     //     id: 1,
+        //     //     icon: 'img/1.webp',
+        //     //     isChecked: true,
+        //     //     name: "米家循环扇 白色",
+        //     //     num: 1,
+        //     //     price: 49,
+        //     // },
+        //     // {
+        //     //     id: 2,
+        //     //     icon: 'img/2.webp',
+        //     //     name: "米家Tritan水杯 白色",
+        //     //     isChecked: false,
+        //     //     num: 2,
+        //     //     price: 199,
+        //     // },
+        //     // {
+        //     //     id: 3,
+        //     //     icon: 'img/3.webp',
+        //     //     isChecked: false,
+        //     //     name: "米家多功能手电筒 黑色",
+        //     //     num: 1,
+        //     //     price: 329,
+        //     // }
+        // ]
+        const app = Vue.createApp({
+            data() {
+                return {
+                    // 商品列表
+                    fruitList: ['111']   
+                }
+            },
+            // mounted() {
+            //     axios.get('https://7b49c26f-17a3-4c7b-ad08-27015715344a.mock.pstmn.io/goodInfo')
+            //         .then(function (response) {
+            //             console.log(response);
+            //         })
+            //         .catch(function (error) {
+            //             console.log(error);
+            //         });
+            // },
+
+            methods: {
+                calculateTotal(item) {
+                    return item.num * item.price;
+                },
+                add(item) {
+                    item.num++;
+                },
+                sub(item) {
+                    if (item.num > 1) { // 避免数量小于 1
+                        item.num--;
+                    }
+                },
+                del(id) {
+                    this.fruitList = this.fruitList.filter(item => item.id !== id);
+                }
+            },
+            computed: {
+                totalPrice() {
+                    let sum = 0;
+                    for (let item of this.fruitList) {
+                        if (item.isChecked) {
+                            sum += item.num * item.price;
+                        }
+                    }
+                    return sum;
+                },
+                totalCount() {
+                    let count = 0;
+                    for (let item of this.fruitList) {
+                        if (item.isChecked) {
+                            count++;
+                        }
+                    }
+                    return count;
+                },
+                isAll: {
+                    get() {
+                        return this.fruitList.every((item) => { //every返回true表示所有元素都满足条件
+                            return item.isChecked === true;
+                        });
+                    },
+                    set(value) {
+                        for (let item of this.fruitList) {
+                            item.isChecked = value;
+                        }
+                    }
+                }
+            },
+
+            async mounted() {
+                const result = await axios.get('https://dbb27ef3-7588-4c22-bc20-aa3f6b8cdbe4.mock.pstmn.io/orders')
+                this.fruitList = result.data
+                console.log(result); 
+            }
+        })
+        var vm = app.mount('#app')
+    </script>
+</body>
+
+</html>

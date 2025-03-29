@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <brother-component1>
+            <a href="#">连接</a>
+        </brother-component1>
+        <brother-component1>
+            <button>按钮</button>
+        </brother-component1>
+    </template>
+    <template id="brother1">
+        <button @click="send">给兄弟2组件发送信息</button>
+        <p>{{message}}</p>
+        <p>
+            <slot></slot>
+        </p>
+        
+    </template>
+    <template id="brother2">
+        <p>{{message}}</p>
+    </template>
+    <script>
+        const emitter = mitt()
+        //根组件
+        const app=Vue.createApp({
+            template:'#root',
+        })
+
+        app.component('BrotherComponent1',{
+            template:'#brother1',
+            data(){
+                return{
+                    message:'兄弟1组件'
+                }
+            },
+            merhods:{
+                send(){
+                    //发送给兄弟2组件
+                    //利用emitter对象的emit方法发送事件
+                    emitter.emit('giveBroLove', 'from brother Love')
+                }
+            }
+        })
+
+        app.component('BrotherComponent2',{
+            template:'#brother2',
+            data(){
+                return{
+                    message:'兄弟2组件'
+                }
+            },
+            mounted(){
+                //利用emitter对象的on方法监听事件
+                emitter.on('giveBroLove', e =>{
+                    console.log(e) 
+                    this.message=e
+                })
+            }
+        })
+        const root=app.mount('#app')
+    </script>
+</body>
+</html>

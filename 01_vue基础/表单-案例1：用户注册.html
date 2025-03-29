@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        table {
+            margin: 0 auto;
+        }
+        input[type="button"] {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <h3>用户注册</h3>
+        <div>
+            <div>
+                用户名:<input type="text" v-model="username">校验通过<br>
+                密码:<input type="password" v-model="password">校验通过
+            </div> 
+            <div>
+                性别:<input type="radio" name="gender" v-model="gender" value="male">男
+                <input type="radio" name="gender" v-model="gender" value="female">女
+            </div>
+            <div>
+                <select name="city" v-model="selectedCity">
+                    <option value="" disabled>请选择</option>
+                    <option value="beijing">北京</option>
+                    <option value="shanghai">上海</option>
+                    <option value="guangzhou">广州</option>
+                </select>
+            </div>
+            <div>
+                <input type="button" value="注册" @click="register">
+                <input type="button" value="修改">
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <table border="1" style="margin: 0 auto;">
+                    <tr>
+                        <th>序号</th>
+                        <th>用户名</th>
+                        <th>性别</th>
+                        <th>地址</th>
+                        <th>编辑</th>
+                    </tr>
+                    <tr v-for="(user,index) in users" :key="index">
+                        <td>{{index+1}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.gender==='male'?'男':'女'}}</td>
+                        <td>{{user.selectedCity}}</td>
+                        <td><input type="button" value="删除" @click="delete(index)"></td>
+                        <td><input type="button" value="编辑" @click="edit(index)"></td>
+                    </tr>
+                </table>
+            </div>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root", 
+            data() {
+                return {
+                    username:'',
+                    password: '',   
+                    checked:true,
+                    gender:'male',
+                    selectedCity:'',
+                    cities:[{key:'beijing',text:'北京'},{key:'shanghai',text:'上海'},{key:'guangzhou',text:'广州'}],
+                    users:[],
+                }
+            },
+            methods:{
+                register(){
+                    this.users.push({
+                        username: this.username,
+                        gender: this.gender,
+                        selectedCity: this.selectedCity
+                    });
+                    // 清空表单
+                    this.message = '';
+                    this.password = '';
+                    this.gender = 'male';
+                    this.selectedCity = '';
+                },
+                delete(){
+                    this.users.splice(index, 1);
+                },
+                edit(){
+                    const user = this.users[index];
+                    this.message = user.username;
+                    this.gender = user.gender;
+                    this.selectedCity = user.city;
+                    this.users.splice(index, 1);
+                }
+            }
+        })
+        const root = app.mount("#app")
+    </script>
+</body>
+</html>

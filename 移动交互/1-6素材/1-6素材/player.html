@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音乐播放器</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/player.js"></script>
+</head>
+<body>
+    <div class="musicBox" id="musicBox">
+        <audio id="myMusic" src="music/世界赠予我-王菲.mp3" loop></audio>
+        <div class="leftControl" onclick="rewindAudio()"></div>
+        <div id="mainControl" class="mainControl" onclick="playAudio()"></div>
+        <div id="stopControl" class="stopControl" style="display:none" onclick="pauseAudio()"></div>
+        <div class="rightControl" onclick="forwardAudio()"></div>
+        <div class="processControl" >
+            <div id="songName" class="songName">世界赠予我</div>
+            <div id="songTime" class="songTime">00:00&nbsp;|&nbsp;00:00</div>
+            <div id="process" style="width:500px" class="process" onclick="audioProcess()"></div>
+            <div id="processYet" class="processYet" onclick="audioProcess()"></div>
+        </div>
+        <div class="voiceEmp" onclick="voiceEmp()"></div>
+        <div id="voidProcess" class="voidProcess" style="width:66px" onclick="voidProcess()"></div>
+        <div class="voidProcessYet"  id="voidProcessYet" onclick="voidProcess()"></div>
+        <div class="voiceFull" onclick="voiceFull()"></div>
+    </div>
+</body>
+</html>

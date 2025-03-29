@@ -1,20 +1,96 @@
+<!-- 229990513赖国彬 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .form-group {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            width: 70px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .form-group input {
+            flex: 1;
+        }
+
+        .save-button {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .divider {
+            border-top: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        .search-group {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .search-group input {
+            flex: 1;
+            margin-right: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    <h3>用户信息卡</h3>
-    姓名:<input type="text" id="username"><br>
-    EMAIL:<input type="text" id="email"><br>
-    电话号码:<input type="number" id="num"><br>
-    说明:<input type="text" id="info"><br>
-    <input type="button" value="保存" onclick="localSave()"><br>
-    查询:<input type="text" id="search">
-    <input type="button" value="按姓名查询" onclick="localLoad()" id="search">
-    <div class="datail"></div>
+    <div class="container">
+        <h3 style="text-align: center;">用户信息卡</h3>
+        <div class="form-group">
+            <label for="username">姓名:</label>
+            <input type="text" id="username">
+        </div>
+        <div class="form-group">
+            <label for="email">EMAIL:</label>
+            <input type="text" id="email">
+        </div>
+        <div class="form-group">
+            <label for="num">电话号码:</label>
+            <input type="number" id="num">
+        </div>
+        <div class="form-group">
+            <label for="info">说明:</label>
+            <input type="text" id="info">
+        </div>
+        <div class="save-button">
+            <input type="button" value="保存" onclick="localSave()">
+        </div>
+        <div class="divider"></div>
+        <div class="search-group">
+            <input type="text" id="search">
+            <input type="button" value="按姓名查询" onclick="localLoad()">
+        </div>
+        <div class="datail"></div>
+    </div>
+    </div>
 </body>
 <script>
     // let obj={
@@ -24,35 +100,37 @@
     // };
     // localStorage.setItem("obj",JSON.stringify(obj));
     // console.log(JSON.parse(localStorage.getItem("obj")))
-    function localSave(){
-        let username=document.querySelector("#username");
-        let email=document.querySelector("#email");
-        let num=document.querySelector("#num");
-        let info=document.querySelector("#info");
-        if(window.localStorage){
-            let message={
-                username:username.value,
-                email:email.value,
-                num:num.value,
-                info:info.value 
+    function localSave() {
+        let username = document.querySelector("#username");
+        let email = document.querySelector("#email");
+        let num = document.querySelector("#num");
+        let info = document.querySelector("#info");
+        if (window.localStorage) {
+            let message = {
+                username: username.value,
+                email: email.value,
+                num: num.value,
+                info: info.value
             }
-            localStorage.setItem(username.value,JSON.stringify(message));
+            localStorage.setItem(username.value, JSON.stringify(message));
         }
     }
 
     //姓名作为key值进行查询
-    function localLoad(){
-        let search=document.querySelector("#search");
-        let datail=document.querySelector(".datail");
-        datail.innerHTML="";
-        if(window.localStorage){
-            for(let i=0;i<localStorage.length;i++){
-                let key=localStorage.key(i);
-                if(key===search.value){
-                    datail.innerHTML+=JSON.parse(localStorage.getItem(key)).username+":"+JSON.parse(localStorage.getItem(key)).email+":"+JSON.parse(localStorage.getItem(key)).num+":"+JSON.parse(localStorage.getItem(key)).info; 
+    function localLoad() {
+        let search = document.querySelector("#search");
+        let datail = document.querySelector(".datail");
+        datail.innerHTML = "";
+        if (window.localStorage) {
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                if (key === search.value) {
+                    let message = JSON.parse(localStorage.getItem(key));
+                    datail.innerHTML += `姓名: ${message.username}<br>EMAIL: ${message.email}<br>电话号码: ${message.num}<br>备注: ${message.info}<br>`;
                 }
             }
         }
     }
 </script>
+
 </html>

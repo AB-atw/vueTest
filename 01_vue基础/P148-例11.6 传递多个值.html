@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 使用blog-content组件 -->
+        <blog-content></blog-content>
+    </div>
+    <script>
+        // 创建一个Vue实例
+        const app = Vue.createApp({});
+        app.component('blog-content', {
+            // 组件的模板，使用blog-title组件，并且传递content属性
+            template: `<div><blog-title :name="name" :price="price" :num="num">
+            </blog-title></div>`,
+            data: function () {
+                return {
+                    name: "苹果",
+                    price: "6.88元",
+                    num: "2800公斤"
+                }
+            }
+        });
+        app.component('blog-title', {
+            props: ['name', 'price', 'num'],
+            template: `<ul><li>
+            {{name}}
+            </li>
+            <li>
+            {{price}}
+            </li>
+            <li>
+            {{num}}
+            </li>
+            </ul>`
+        });
+        //在指定的dom元素上挂载应用程序实例的根组件
+        app.mount("#app");
+
+        const app2 = Vue.createApp({
+            template:'#root',
+        });
+        app2.component('blog-title', {
+            template:"<div>{{name}}--{{price}}--{{num}}</div>",
+            props:{
+                name:String,
+                price:String,
+                num:String
+            },
+            methods:{
+                send(){
+                    this.$emit('toFather',"老爸你好")
+                }
+            }
+        })
+        //父组件
+        app2.component('blog-content',{
+            template:`<div><blog-title :name='name' :price='price' 
+                :num='num' @toFather='handleMessage'>
+                </blog-title>
+                {{message}}
+                </div>`,
+            data(){
+                return{
+                    name:"苹果",
+                    price:"6.88元",
+                    num:"2800公斤",
+                    message:""
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

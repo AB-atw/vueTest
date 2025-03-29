@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <input type="text" v-model="text">{{text}}
+        <!-- v-modle等于一个是属性的绑定，一个是事件的绑定 -->
+        <input type="text" :value="text" @input="text=$event.target.value">{{text}}
+        <child-component v-model="text"></child-component>
+    </template>
+    <template id="child">
+        <p>{{message}}</p>
+    </template>
+    <script>
+        //根组件
+        const app=Vue.createApp({
+            template:'#root',
+            data(){
+                return{
+                    message:'grandfather组件',
+                    text:''
+                }
+            },
+            provide:{
+                mess:'hello grandchinld'
+            }
+        })
+
+        app.component('FatherComponent',{
+            template:'#father',
+            data(){
+                return{
+                    message:'father组件'
+                }
+            },
+        })
+
+        app.component('ChildComponent',{
+            template:'#child',
+            emits:['update:modelValue'],
+            props:['modelValue'],
+            inject:['mess'],
+            data(){
+                return{
+                    message:'child组件'
+                }
+            },
+        })
+        const root=app.mount('#app')
+    </script>
+</body>
+</html>

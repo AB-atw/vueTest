@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <div>
+            <div>
+                <input type="text" v-model="message">{{message}}
+                <input type="text" :value="message" @input="message=$event.target.value">
+
+            </div>
+            <div>
+                <textarea v-model="message"></textarea>
+            </div>
+            <div>
+                <input type="checkbox" v-model="checked">是否选择
+            </div>
+            <div>
+                <input type="checkbox" name="sport" v-model="sports" value="football">足球
+                <input type="checkbox" name="sport" v-model="sports" value="basketball">篮球
+                <!-- 使用v-model绑定的sports是一个数组，所以可以绑定多个值,实现多选 -->
+            </div>
+            <div>
+                <input type="radio" name="gender" v-model="gender" value="male">男
+                <input type="radio" name="gender" v-model="gender" value="female">女
+            </div>
+            <div>
+                <select name="city" v-model="selectedCity">
+                    <option value="" disabled>请选择</option>
+                    <option value="beijing">北京</option>
+                    <option value="shanghai">上海</option>
+                    <option value="guangzhou">广州</option>
+                </select>
+            </div>
+            <div>
+                <select name="city" v-model="selectedCities" multiple="true">
+                    <option value="" disabled>请选择</option>
+                    <option value="beijing">北京</option>
+                    <option value="shanghai">上海</option>
+                    <option value="guangzhou">广州</option>
+                </select>
+            </div>
+            <div>
+                <select name="city" v-model="selectedCities">
+                    <option value="" disabled>请选择</option>
+                    <option :value="city.key" v-for="(city,index) in cities" :key="index">{{city.text}}</option>
+                </select>
+            </div>
+            <div>
+                <input type="checkbox" v-model="result" true-value="yes" false-value="no">
+            </div>
+            <div>
+                <input type="checkbox" v-model="picked" :value="pickedValue">是否打勾
+            </div>
+            <div>
+                <input type="text" v-model.lazy="message">
+            </div>
+            <div>
+                <input type="text" v-model.number="mynnumber">{{typeof mynnumber}}
+            </div>
+            <div>
+                <input type="text" v-model.trim="mynnumber">{{typeof mynnumber}}
+            </div>
+        </div>
+    </template>
+
+    <script>
+        const app = Vue.createApp({
+            template: "#root", 
+            data() {
+                return {
+                    message:'zs',
+                    checked:true,
+                    sports:['football'],
+                    gender:'male',
+                    selectedCity:'',
+                    selectedCities:[],
+                    cities:[{key:'beijing',text:'北京'},{key:'shanghai',text:'上海'},{key:'guangzhou',text:'广州'}],
+                    result:'yes',
+                    picked:false,
+                    pickedValue:'123',
+                } 
+            }
+        })
+        const root = app.mount("#app")
+    </script>
+</body>
+</html>

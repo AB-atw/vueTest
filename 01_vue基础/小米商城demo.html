@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <template id="root">
+        <h2>简版购物车</h2>
+        <input type="checkbox" v-model="checkAll">全选
+        <table border="1">
+            <tr>
+                <td></td>
+                <td>商品名称</td>
+                <td>商品单价</td>
+                <td>商品数量</td>
+                <td>商品小计</td>
+            </tr>
+            <tr v-for="g in goodsList" :key="g.id">
+                <td>
+                    <input type="checkbox" v-model="g.Checked">
+                </td>
+                <td>{{g.name}}</td>
+                <td>{{g.price}}</td>
+                <td>
+                    <button @click="add(g)">+</button>
+                    {{g.count}}
+                    <button @click="sub(g)">-</button>
+                </td>
+                <td>
+                    {{calculateTotal(g)}}
+                </td>
+            </tr>
+        </table>
+        <p>总价:{{totalPrice}}</p>
+    </template>
+    <script>
+        const app = Vue.createApp({
+            template: '#root',
+            data() {
+                return {
+                    goodsList: [
+                        {
+                            id: 1,
+                            name: "洗衣机",
+                            price: 3600,
+                            count: 1,
+                            Checked: false
+                        },
+                        {
+                            id: 2,
+                            name: '电视机',
+                            price: 2600,
+                            count: 1,
+                            Checked: false
+                        },
+                        {
+                            id: 3,
+                            name: '饮水机',
+                            price: 500,
+                            count: 1,
+                            Checked: false
+                        },
+                    ]
+                }
+            },
+            methods: {
+                calculateTotal(g) {
+                    return g.count * g.price
+                },
+                add(g) {
+                    g.count++
+                },
+                sub(g) {
+                    if (g.count > 1) { // 避免数量小于 1
+                        g.count--;
+                    }
+                }
+            },
+            computed: {
+                totalPrice() {
+                    let sum = 0
+                    for (let g of this.goodsList) {
+                        if (g.Checked) {
+                            sum += g.count * g.price
+                        }
+                    }
+                    return sum
+                },
+                checkAll: {
+                    get() {
+                        this.goodsList.every((g) =>{//every返回true表示所有元素都满足条件
+                            return g.Checked==true
+                    })
+                    },
+                    set(value) {
+                        for (let g of this.goodsList) {
+                            g.Checked = value
+                        }
+                    }
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>
